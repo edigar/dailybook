@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/perfil', [UserController::class, 'edit'])->name('profile');
     Route::patch('/usuario', [UserController::class, 'update'])->name('update.user');
+    Route::patch('/usuario/imagem', [UserController::class, 'updateImage'])->name('update.user-image');
     Route::get('usuario/alterar-senha', [UserController::class, 'editPassword'])->name('edit.password');
     Route::patch('usuario/alterar-senha', [UserController::class, 'updatePassword'])->name('update.password');
     Route::delete('usuario', [UserController::class, 'destroy'])->name('delete.user');

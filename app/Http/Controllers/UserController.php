@@ -6,8 +6,10 @@ use App\Models\User;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UpdateUserImageRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -77,7 +79,6 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateUserRequest  $request
-     * @param  int  $userId
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateUserRequest $request)
@@ -101,6 +102,31 @@ class UserController extends Controller
 
         $user->name = $userData['name'];
         $user->email = $userData['email'];
+
+        $user->save();
+
+        return redirect('/perfil');
+    }
+
+    /**
+     * Update the user image.
+     *
+     * @param  \App\Http\Requests\UpdateUserImageRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateImage(UpdateUserImageRequest $request)
+    {
+        $user = User::findOrFail(Auth::id());
+        $userData = $request->validated();
+
+        if(isset($userData['image'])) {
+            Storage::disk('local')->put("public/profile", $userData['image']);
+            if(!empty($user->image)) {
+                Storage::delete($user->image);
+            }
+        }
+
+        $user->image = 'public/profile/' . $userData['image']->hashName();
 
         $user->save();
 

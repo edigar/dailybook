@@ -16,6 +16,24 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h1>Meus dados</h1>
+                <form method="POST" action="{{ route('update.user-image') }}" enctype="multipart/form-data">
+                    @method('PATCH')
+                    @csrf
+
+                    @error('image')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    <div class="text-center">
+                        <label for="image">
+                            @if (empty($user->image))
+                                <img src="{{ asset('blank-profile.jpg') }}" alt="foto de perfil" style="border-radius: 50%;">
+                            @else
+                                <img src="{{ $user->image_url }}" alt="foto de perfil" style="border-radius: 50%; width: 200px; height: 200px">
+                            @endif
+                            <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png, .gif*" style="display:none;">
+                        </label>
+                    </div>
+                </form>
                 <form method="POST" action="{{ route('update.user') }}">
                     @method('PATCH')
                     @csrf
@@ -60,4 +78,12 @@
         </div>
     </div>
 </body>
+<script>
+    document.querySelectorAll('input[type=file]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            const form = input.closest('form');
+            form.submit();
+        });
+    });
+</script>
 </html>
