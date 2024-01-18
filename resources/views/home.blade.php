@@ -44,7 +44,7 @@
                     <div class="align-items-baseline">
                         <a href="{{ route('edit.note', $note->id) }}" class="btn btn-primary align-bottom">Editar</a>
                         <form action="{{ route('delete.note', $note->id) }}" method="POST" class="d-inline-flex">
-                            @method('DEELTE')
+                            @method('DELETE')
                             @csrf
                             <input type="submit" class="btn btn-danger" value="Apagar">
                         </form>
