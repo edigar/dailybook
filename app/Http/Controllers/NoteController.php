@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
+use App\Models\Note;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\View\View;
 
 class NoteController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $search = $request->query('search');
 
@@ -31,8 +33,6 @@ class NoteController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -42,10 +42,10 @@ class NoteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreNoteRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreNoteRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreNoteRequest $request)
+    public function store(StoreNoteRequest $request): RedirectResponse
     {
         $note = $request->validated();
         $note['user_id'] = Auth::id();
@@ -58,8 +58,7 @@ class NoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Note  $note
-     * @return \Illuminate\Http\Response
+     * @param Note $post
      */
     public function show(Note $post)
     {
@@ -69,10 +68,10 @@ class NoteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $noteId
-     * @return \Illuminate\Http\Response
+     * @param int $noteId
+     * @return View
      */
-    public function edit(int $noteId)
+    public function edit(int $noteId): View
     {
         $note = Note::findOrFail($noteId);
         return view('edit_note')->with('note', $note);
@@ -81,11 +80,11 @@ class NoteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateNoteRequest  $request
+     * @param UpdateNoteRequest $request
      * @param  int  $noteId
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(UpdateNoteRequest $request, int $noteId)
+    public function update(UpdateNoteRequest $request, int $noteId): RedirectResponse
     {
         $note = Note::findOrFail($noteId);
         $noteData = $request->validated();
@@ -100,10 +99,10 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Note  $noteId
-     * @return \Illuminate\Http\Response
+     * @param  int  $noteId
+     * @return RedirectResponse
      */
-    public function destroy(int $noteId)
+    public function destroy(int $noteId): RedirectResponse
     {
         Note::destroy($noteId);
 

@@ -1,14 +1,14 @@
 version: '3.7'
 volumes:
-  dbdata:
+    dbdata:
 services:
-  db:
-    image: mysql:8
-    container_name: dailybook_db
-    volumes:
-      - dbdata:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: dailybook
-    ports:
-      - 3306:3306
+    db:
+        image: mysql:8
+        container_name: dailybook_db
+        volumes:
+            - dbdata:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: dailybook
+        ports:
+            - 3306:3306
