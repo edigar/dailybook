@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserImageRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -26,9 +29,9 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('register');
     }
@@ -36,10 +39,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreNoteRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreUserRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $user = User::create([
             'name' => $request->input('name'),
@@ -56,7 +59,7 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(User $user)
     {
@@ -66,9 +69,9 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function edit()
+    public function edit(): View
     {
         $user = User::findOrFail(Auth::id());
 
@@ -78,10 +81,10 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateUserRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param UpdateUserRequest $request
+     * @return RedirectResponse
      */
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request): RedirectResponse
     {
         $user = User::findOrFail(Auth::id());
         $userData = $request->validated();
@@ -111,10 +114,10 @@ class UserController extends Controller
     /**
      * Update the user image.
      *
-     * @param  \App\Http\Requests\UpdateUserImageRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param UpdateUserImageRequest $request
+     * @return RedirectResponse
      */
-    public function updateImage(UpdateUserImageRequest $request)
+    public function updateImage(UpdateUserImageRequest $request): RedirectResponse
     {
         $user = User::findOrFail(Auth::id());
         $userData = $request->validated();
@@ -136,9 +139,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy()
+    public function destroy(): RedirectResponse
     {
         User::destroy(Auth::id());
 
@@ -148,9 +151,9 @@ class UserController extends Controller
     /**
      * Show the form for editing password.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function editPassword()
+    public function editPassword(): View
     {
         return view('edit_password');
     }
@@ -158,10 +161,10 @@ class UserController extends Controller
     /**
      * Update password.
      *
-     * @param \App\Http\Requests\UpdatePasswordRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param UpdatePasswordRequest $request
+     * @return RedirectResponse
      */
-    public function updatePassword(UpdatePasswordRequest $request)
+    public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
     {
         $user = User::findOrFail(Auth::id());
         $passwords = $request->validated();
