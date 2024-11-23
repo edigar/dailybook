@@ -36,8 +36,8 @@ class StoreNoteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'Título é orbrigatório.',
-            'content.required' => 'Conteúdo é orbrigatório.',
+            'title.required' => 'Título é obrigatório.',
+            'content.required' => 'Conteúdo é obrigatório.',
         ];
     }
 }
