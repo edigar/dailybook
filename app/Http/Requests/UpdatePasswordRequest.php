@@ -37,8 +37,8 @@ class UpdatePasswordRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'password.required' => 'Senha é obrigatória.',
-            'new_password.required' => 'Senha é obrigatória.',
+            'password.required' => 'Senha é obrigatório.',
+            'new_password.required' => 'Senha é obrigatório.',
             'new_password.min' => 'Senha deve ter ao menos 3 letras.',
             'new_password.confirmed' => 'A nova senha e confirmação de senha devem ser iguais.',
             'new_password_confirmation.required' => 'Confirmação de senha é obrigatório.',
