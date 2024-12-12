@@ -35,7 +35,7 @@ class UpdateUserImageRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'image.required' => 'Imagem é orbrigatória.',
+            'image.required' => 'Imagem é obrigatório.',
             'image.image' => 'Deve ser uma imagem válida (jpg, jpeg, png, bmp, gif, svg, ou webp).',
         ];
     }
