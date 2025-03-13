@@ -40,9 +40,9 @@ class UpdateUserRequest extends FormRequest
             'name.required' => 'Nome é obrigatório.',
             'name.min' => 'Nome deve ter ao menos 3 letras.',
             'name.max' => 'Nome deve ter no máximo 255 letras.',
-            'email.required' => 'E-mail é orbrigatório.',
+            'email.required' => 'E-mail é obrigatório.',
             'email.email' => 'O e-mail deve ser válido.',
-            'password.required' => 'Senha é obrigatória.',
+            'password.required' => 'Senha é obrigatório.',
         ];
     }
 }
