@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreNoteRequest;
 use App\Http\Requests\UpdateNoteRequest;
 use App\Models\Note;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class NoteController extends Controller
@@ -24,7 +23,7 @@ class NoteController extends Controller
     {
         $search = $request->query('search');
 
-        $notes = DB::table('notes')->where('user_id', Auth::id())->when($search, function (Builder $query, string $search) {
+        $notes = Note::where('user_id', Auth::id())->when($search, function (Builder $query, string $search) {
             $query->where('title', 'LIKE', '%' . $search . '%')->orWhere('content', 'LIKE', '%' . $search . '%');
         })->orderByDesc('updated_at')->get();
 
